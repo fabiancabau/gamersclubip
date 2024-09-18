@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Gamers Club Response Interceptor",
+  "version": "1.0",
+  "description": "Intercepts responses from https://gamersclub.com.br/api/lobby/match and displays info on the page.",
+  "permissions": ["scripting", "webRequest", "activeTab"],
+  "host_permissions": [
+    "https://gamersclub.com.br/*",
+    "https://cs.gamersclub.gg/"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.gamersclub.com.br/lobby*",
+        "*://cs.gamersclub.gg/lobby*",
+        "*://*.gamersclub.com.br/ranked*",
+        "*://cs.gamersclub.gg/ranked*",
+        "*://*.gamersclub.com.br/match*",
+        "*://cs.gamersclub.gg/match*",
+        "*://*.gamersclub.com.br/hub*",
+        "*://cs.gamersclub.gg/hub*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injectedScript.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval';object-src 'self';"
+  }
+}
